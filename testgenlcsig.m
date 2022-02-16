@@ -7,13 +7,16 @@ I=4;
 
 
 % Instantaneous frequency after 1 sec is 
-maxFreq = 5;
-samplFreq = 5*maxFreq;
-samplIntrvl = 1/samplFreq;
+%FIXME Use your own sampling interval as instructed
+% maxFreq = 5;
+% samplFreq = 5*maxFreq;
+% samplIntrvl = 1/samplFreq;
+samplIntrvl = 0.005;
 
 % Time samples
 timeVec = 0:samplIntrvl:5;
 % Number of samples
+%FIXME nSamples is not used anywhere, so why compute it?
 nSamples = length(timeVec);
 
 % Generate the signal
