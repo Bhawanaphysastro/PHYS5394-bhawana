@@ -1,3 +1,5 @@
+%FIXME Add helpful comments. Explain the purpose of the script, explain
+%variables etc.
 A=5;
 ta=0;
 L=10;
@@ -6,6 +8,7 @@ f1=3;
 I=5;
 
 % Instantaneous frequency after 1 sec is 
+%FIXME This formula will be incorrect if L < 1 sec.
 maxFreq = f0+2*f1(1-ta);
 % sampling frequency 5 times the maximum frequency
 samplFreq1 = 5*maxFreq;
