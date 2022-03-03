@@ -9,9 +9,9 @@ function sigVec = genltcsig_correct(dataX,A,ta,L,f0,f1,I)
 % and I is the initial phase
 
 
-% Bhawana Sedhai, Feb-11, 2022
+% Bhawana Sedhai, Feb-21, 2022
 
-%SDM correction
+
 sigVec = zeros(size(dataX));
 strtIndx = find(dataX >= ta, 1 );
 stpIndx = find(dataX <= ta+L, 1, 'last' );
@@ -21,4 +21,4 @@ phaseVec = f0*(dataX(strtIndx:stpIndx)-ta)+f1*(dataX(strtIndx:stpIndx)-ta).^2;
 s = A*sin(2*pi*(phaseVec)+I);
 
 
-sigVec(strtIndx:stpIndx) = s/norm(s);
+sigVec(strtIndx:stpIndx) = s/norm(s); 
