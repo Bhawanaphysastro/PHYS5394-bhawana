@@ -1,19 +1,23 @@
 %% Plot the linear chirp signal
 % Signal parameters
 A=2;
-f0=2;
-f1=3;
+f0=20;
+f1=30;
 I=4;
-
+%SDM Generalized to an arbitrary signal length
+sigLen = 10;%sec
 
 % Instantaneous frequency after 1 sec is 
-maxFreq = f0+2*f1;
+%SDM Generalized to an arbitrary signal length
+maxFreq = f0+2*f1*sigLen;
 % sampling frequency 5 times the maximum frequency
-samplFreq= 5*maxFreq;
+%FIXME Sampling frequency is 5 times the Nyquist sampling frequency
+samplFreq= 5*(2*maxFreq);
 samplIntrvl = 1/samplFreq;
 
 % Time samples
-timeVec = 0:samplIntrvl:1;
+%SDM Generalized to an arbitrary signal length
+timeVec = 0:samplIntrvl:sigLen;
 % Number of samples
 nSamples = length(timeVec);
 
@@ -23,7 +27,8 @@ sigVec = genlcsign(timeVec,A,f0,f1,I);
 
 %Plot the signal 
 figure;
-plot(timeVec,sigVec,'Marker','.','MarkerSize',24);
+%plot(timeVec,sigVec,'Marker','.','MarkerSize',24);
+plot(timeVec,sigVec);
 title('linear chirp signal'); 
 xlabel('time in second');
 ylabel('amplitude in arbitrary units');

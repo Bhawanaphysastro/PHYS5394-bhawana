@@ -14,6 +14,7 @@ phi3= pi/4;
 
 %Generate the time vector
 samplFreq = 1024; %in HZ
+%FIXME Why did you compute maxFreq here? 
 maxFreq = 0.5*samplFreq;
 nSamples = 2*samplFreq;
 timeVec = (0:(nSamples-1))/samplFreq;
@@ -26,11 +27,15 @@ s3 = A3*sin(2*pi*f3*timeVec+phi3);
 %Add the 3 sinusoids
 sigVec = s1+s2+s3;
 
+%FIXME Half the sampling frequency is not the maximum frequency of the sum
+%of sinusoids. Review the lecture on Nyquist sampling frequency.
 disp(['maximum frequecy of the sum of sinusoids', num2str(maxFreq)]);
 
 %design filter to allow s1 to pass through filter(lowpass)
 filtOrder = 30; %use same order for all
 %pass frequencies below 120
+%FIXME Note that the periodogram magnitude of this signal after filtering
+%is reduced. Why? and what should you do to fix this?
 b1= fir1(filtOrder, 120/(samplFreq/2), 'low');
 %apply the low pass filter
 filtS1 = fftfilt(b1, sigVec);
