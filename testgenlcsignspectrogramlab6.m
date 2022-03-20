@@ -5,11 +5,16 @@
 % C is the vector of two coefficients[f0, f1] that parametrize the frequency 
 % of the signal: f0*t+f1*t^2 and I is the initial phase
 
+%FIXME Path to GENLCSIG was required.
+addpath L5lab
+
 % Signal parameters
 A=2;
 f0=20;
 f1=10;
 I=4;
+
+%FIXME 
 
 
 % Instantaneous frequency after 1 sec is 
