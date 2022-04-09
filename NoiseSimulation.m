@@ -4,11 +4,16 @@ sampFreq = 1024;
 nSamples = 16384;
 
 % Load data from the file
+%FIXME This file was not supplied. 
 data = load('iLIGOSensitivity.txt');
 
 % Target Power Spectral Density
-psdVals = y(:,2);
-freqVec = y(:,1);
+%FIXME Error: The variable 'y' was not defined
+% psdVals = y(:,2);
+% freqVec = y(:,1);
+psdVals = data(:,2);
+freqVec = data(:,1);
+
 % Plot the target Power Spectral Density
 figure;
 loglog(freqVec, psdVals);
@@ -21,8 +26,20 @@ inNoise = randn(1, nSamples);
 % Design filter with Transfer function T(f) = sqrt(targetPSD)
 % Filter parameters
 fltrOrdr = 500;
-freq = y(:,1)*512/max(y(:,1));
-b = fir2(fltrOrdr, freq/(sampFreq/2), y(:,2));
+%FIXME Error: The variable 'y' was not defined
+% freq = y(:,1)*512/max(y(:,1));
+% b = fir2(fltrOrdr, freq/(sampFreq/2), y(:,2));
+%FIXME Incorrect: PSD needed to be flattened outside [50,700] Hz.
+freq = data(:,1)*512/max(data(:,1));
+%FIXME Bug: The code does not run beyond this point. See error message below.
+%==================
+Error using fir2 (line 168)
+The first frequency must be 0 and the last 1.
+
+Error in NoiseSimulation (line 34)
+b = fir2(fltrOrdr, freq/(sampFreq/2), data(:,2));
+%==================
+b = fir2(fltrOrdr, freq/(sampFreq/2), data(:,2));
 
 % Filter the input noise
 outNoise = sqrt(sampFreq)*fftfilt(b, inNoise);
