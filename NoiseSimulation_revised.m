@@ -35,6 +35,11 @@ inNoise = randn(1, nSamples);
 fltrOrdr = 600;
 freq = y(:,1)*512/max(y(:,1));
 b = fir2(fltrOrdr, freq/(sampFreq/2), y(:,2));
+figure;
+loglog(freq,y(:,2));
+title('Target PSD');
+xlabel('Frequencies(Hz)');
+ylabel('Target PSD');
 
 % Filter the input noise
 outNoise = sqrt(sampFreq)*fftfilt(b, inNoise);
@@ -53,5 +58,7 @@ sqrt_v = sqrt(v(:,2));
 % Plot the PSD
 figure;
 loglog(v(:, 1), sqrt_v);
+hold on
+loglog(freq, y(:,2));
 xlabel('Frequencies(Hz)');
 ylabel('Estimated PSD values');
