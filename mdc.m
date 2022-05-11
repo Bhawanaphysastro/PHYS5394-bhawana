@@ -1,8 +1,8 @@
 
-addpath ..\SDMBIGDAT19\CODES
-addpath ..\DATASCIENCE_COURSE\SIGNALS
-addpath .. \DATASCIENCE_COURSE\DETEST
-addpath .. \PHYS5394-bhawana
+% addpath ..\SDMBIGDAT19\CODES
+% addpath ..\DATASCIENCE_COURSE\SIGNALS
+% addpath .. \DATASCIENCE_COURSE\DETEST
+% addpath .. \PHYS5394-bhawana
 
 
 % Load the noise and data realizations
@@ -29,8 +29,11 @@ dataX = (0:(nSamples-1))/sampFreq;
 psdVec = interp1(1:length(pxx),pxx,linspace(1,length(pxx),1025),'cubic');
 posFreq = interp1(1:length(posFreq),posFreq,linspace(1,length(posFreq),1025),'linear');
 
+%SDM
+loglog(posFreq,psdVec);
 
 %% Set up matrix of parameters to get GLRT values
+%FIXME ??? Who told you to do a grid search in this MDC??
 % Number of parameters to test (tn^3).
 tn = 4;
 % vectors of each parameters
@@ -66,6 +69,8 @@ allsign = zeros(tn^3); % all significances
 sqrtPSD = sqrt(psdVec);
 b = fir2(100,posFreq/(sampFreq/2),sqrtPSD);
 
+%FIXME Error: The significance calculation requires the *same* detection method to be used on H0 data realizations as H1 data (i.e., glrtqcpso should be used on both). 
+%FIXME Error: Why are you computing the detection statistic assuming some signal parameter values? Here, the parameter values are unknown and need to be estimated from the data.
 % to estimate glrt and significance of the parameter ranges
 for t = 1:(tn^3)
     for r = 1:m
@@ -100,7 +105,7 @@ inParams = struct('dataX',dataX,...
                   'snr',snr,...
                   'rmin',[a1(1),a2(1),a3(1)],...
                   'rmax',[a1(2),a2(2),a3(2)]);
-
+%FIXME Error: The field is called 'maxSteps', not 'steps'; CRCBPSO would not have recognized this field and used the default value of 2000, so no harm done.
 psoParams = struct('steps',nSteps);
 outStruct = glrtqcpso(inParams,psoParams,nRuns);
 
